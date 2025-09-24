@@ -35,7 +35,7 @@ function NewsList() {
 
     try {
       await newsService.deleteNews(id);
-      setNews(news.filter(item => item.id !== id));
+      setNews(news.filter(item => item._id !== id));
     } catch (error) {
       setError('Failed to delete news item.');
       console.error('Error deleting news item:', error);
@@ -93,7 +93,7 @@ function NewsList() {
       ) : (
         <div className="news-grid">
           {sortedNews.map((item) => (
-            <div key={item.id} className="news-card">
+            <div key={item._id} className="news-card">
               <div className="news-content">
                 <h2 className="news-title">{item.title}</h2>
                 <p className="news-excerpt">
@@ -111,9 +111,9 @@ function NewsList() {
                 </div>
               </div>
               <div className="news-actions-card">
-                <Link to={`/edit/${item.id}`} className="btn btn-secondary">Edit</Link>
+                <Link to={`/edit/${item._id}`} className="btn btn-secondary">Edit</Link>
                 <button 
-                  onClick={() => handleDelete(item.id)} 
+                  onClick={() => handleDelete(item._id)} 
                   className="btn btn-danger"
                 >
                   Delete
