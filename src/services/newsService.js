@@ -1,8 +1,4 @@
-// News API Service
-// This assumes the API is running on a backend server
-// Update the BASE_URL to match your actual API endpoint
-
-const BASE_URL = 'http://localhost:3001/api'; // Update this URL to match your backend API
+const BASE_URL = import.meta.env.VITE_APP_API_URL; // Update this URL to match your backend API
 
 class NewsService {
   async getAllNews() {
