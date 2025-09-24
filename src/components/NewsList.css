@@ -113,8 +113,8 @@
 }
 
 .news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
@@ -180,9 +180,5 @@
   
   .news-actions {
     justify-content: space-between;
-  }
-  
-  .news-grid {
-    grid-template-columns: 1fr;
   }
 }
