@@ -7,7 +7,7 @@ function NewsList() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortOrder, setSortOrder] = useState('desc'); // desc = newest first, asc = oldest first
+  const [sortOrder, setSortOrder] = useState('desc');
 
   useEffect(() => {
     loadNews();
@@ -28,28 +28,14 @@ function NewsList() {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this news item?')) {
-      return;
-    }
-
-    try {
-      await newsService.deleteNews(id);
-      setNews(news.filter(item => item._id !== id));
-    } catch (error) {
-      setError('Failed to delete news item.');
-      console.error('Error deleting news item:', error);
-    }
-  };
-
   const sortedNews = [...news].sort((a, b) => {
     const dateA = new Date(a.createdAt || a.date || Date.now());
     const dateB = new Date(b.createdAt || b.date || Date.now());
     
     if (sortOrder === 'desc') {
-      return dateB - dateA; // newest first
+      return dateB - dateA; 
     } else {
-      return dateA - dateB; // oldest first
+      return dateA - dateB;
     }
   });
 
@@ -101,6 +87,7 @@ function NewsList() {
                     ? `${item.content.substring(0, 150)}...` 
                     : item.content || 'No content available'}
                 </p>
+                <Link to={`/view/${item._id}`} className="read-more-btn" state={item}>Read More</Link>
                 <div className="news-meta">
                   <span className="news-date">
                     {item.createdAt || item.date 
@@ -109,15 +96,6 @@ function NewsList() {
                   </span>
                   {item.author && <span className="news-author">By {item.author}</span>}
                 </div>
-              </div>
-              <div className="news-actions-card">
-                <Link to={`/edit/${item._id}`} className="btn btn-secondary">Edit</Link>
-                <button 
-                  onClick={() => handleDelete(item._id)} 
-                  className="btn btn-danger"
-                >
-                  Delete
-                </button>
               </div>
             </div>
           ))}

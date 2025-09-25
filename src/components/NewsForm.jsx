@@ -72,11 +72,11 @@ function NewsForm() {
 
       if (isEdit) {
         await newsService.updateNews(id, newsData);
+        navigate(`/view/${id}`);
       } else {
         await newsService.createNews(newsData);
+        navigate('/');
       }
-
-      navigate('/');
     } catch (error) {
       setError(`Failed to ${isEdit ? 'update' : 'create'} news item. Please check if the API server is running.`);
       console.error('Error saving news item:', error);
@@ -86,7 +86,11 @@ function NewsForm() {
   };
 
   const handleCancel = () => {
-    navigate('/');
+    if (isEdit) {
+      navigate(`/view/${id}`);
+    } else {
+      navigate('/');
+    }
   };
 
   if (loadingData) {
